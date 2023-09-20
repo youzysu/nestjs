@@ -1,21 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { IProductRepository } from './product.repository';
 import { Product } from './type';
 
 @Injectable()
 export class ProductService {
-  private products: Product[] = [];
+  constructor(
+    @Inject(IProductRepository)
+    private readonly productRepository: IProductRepository,
+  ) {}
 
-  constructor() {}
-
-  getProducts(): Product[] {
-    return this.products;
+  async createProduct(product: Product) {
+    await this.productRepository.createProduct(product);
   }
 
-  createProduct(product: Product) {
-    this.products.push(product);
+  async getProducts(): Promise<Product[]> {
+    return this.productRepository.getProducts();
   }
 
-  getProduct(id: string): Product {
-    return this.products.filter((product) => product.id === id)[0];
+  async getProduct(id: string): Promise<Product> {
+    return this.productRepository.getProduct(id);
   }
 }

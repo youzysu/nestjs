@@ -7,13 +7,13 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
-  getProducts(): Product[] {
-    return this.productService.getProducts();
+  async getProducts(): Promise<Product[]> {
+    return await this.productService.getProducts();
   }
 
   @Get('/:id')
-  getProduct(@Param('id') id: string): Product {
-    return this.productService.getProduct(id);
+  async getProduct(@Param('id') id: string): Promise<Product> {
+    return await this.productService.getProduct(id);
   }
 
   @Post()

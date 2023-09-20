@@ -9,9 +9,12 @@ export class ProductServiceSQLite implements IProductRepository {
 
   constructor() {
     this.db.serialize(() => {
-      this.db.run(
-        'CREATE TABLE IF NOT EXISTS products (id INTEGER AUTO_INCREMENT PRIMARY KEY, name TEXT, price INTEGER)',
-      );
+      this.db.run(`CREATE TABLE IF NOT EXISTS products (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        description TEXT,
+        price INTEGER
+      )`);
     });
   }
 

@@ -13,7 +13,7 @@ export class ProductController {
 
   @Get('/:id')
   async getProduct(@Param('id') id: string): Promise<Product> {
-    return await this.productService.getProduct(id);
+    return await this.productService.getProduct(parseInt(id));
   }
 
   @Post()

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import sqlite3 from 'sqlite3';
+import * as sqlite3 from 'sqlite3';
 import { IProductRepository } from './product.repository';
 import { Product } from './type';
 
@@ -17,7 +17,7 @@ export class ProductServiceSQLite implements IProductRepository {
 
   getProducts(): Promise<Product[]> {
     return new Promise((resolve, reject) => {
-      this.db.all('SELECT * FROM products', (err, rows) => {
+      this.db.all('SELECT * FROM products', (err, rows: Product[]) => {
         if (err) {
           reject(err);
         }
@@ -42,12 +42,15 @@ export class ProductServiceSQLite implements IProductRepository {
 
   getProduct(id: number): Promise<Product> {
     return new Promise((resolve, reject) => {
-      this.db.get(`SELECT * FROM products WHERE id = ${id}`, (err, row) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(row);
-      });
+      this.db.get(
+        `SELECT * FROM products WHERE id = ${id}`,
+        (err, row: Product) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(row);
+        },
+      );
     });
   }
 }

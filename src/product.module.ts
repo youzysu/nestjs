@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ProductController } from './product.controller';
 import { IProductRepository } from './product.repository';
-import { ProductServiceMemory } from './product.repository.memory';
+import { ProductServiceSQLite } from './product.repository.sqlite';
 import { ProductService } from './product.service';
 
 @Module({
@@ -11,10 +11,7 @@ import { ProductService } from './product.service';
     ProductService,
     {
       provide: IProductRepository,
-      useClass:
-        process.env.NODE_ENV === 'production'
-          ? ProductServiceMemory
-          : ProductServiceMemory,
+      useClass: ProductServiceSQLite,
     },
   ],
 })

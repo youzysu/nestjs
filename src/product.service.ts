@@ -17,7 +17,7 @@ export class ProductService {
     return this.productRepository.getProducts();
   }
 
-  async getProduct(id: string): Promise<Product> {
+  async getProduct(id: number): Promise<Product> {
     return this.productRepository.getProduct(id);
   }
 }
